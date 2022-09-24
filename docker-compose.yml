@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  cyclopedia-mobile:
+    image: cyclopedia_mobile:dev
+    networks:
+      - traefik_default
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.cyclopedia-mobile.entrypoints=http
+      - traefik.http.routers.cyclopedia-mobile.rule=Host(`${HOST}.${DOMAIN}`)
+      - traefik.http.routers.cyclopedia-mobile.middlewares=cyclopedia-api-secure
+      - traefik.http.middlewares.cyclopedia-mobile-secure.redirectscheme.scheme=https
+      - traefik.http.routers.cyclopedia-mobile-secure.entrypoints=https
+      - traefik.http.routers.cyclopedia-mobile-secure.rule=Host(`${HOST}.${DOMAIN}`)
+      - traefik.http.routers.cyclopedia-mobile-secure.tls.certresolver=letsencrypt
+networks:
+  traefik_default:
+    external: true
