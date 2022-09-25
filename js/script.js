@@ -9,12 +9,10 @@ function getLocation() {
 
 //Post POI data to the REST endpoint
 function postPOIData(name, desc) {
-    disableAllInput();
     postData("https://api-dev.cyclopedia.goldenrivet.xyz/poi/create_def", {
             "poi_type": name.value,
             "poi_desc": desc.value
         })
-        //postData("http://localhost:8000/poi/create_def", {"poi_type": name.value, "poi_desc": desc.value})
         .then((response) => response.json())
         .then((jsondata) => {
             name.value = "";
@@ -36,24 +34,39 @@ async function postData(url = '', data = {}) {
         headers: {
             "Content-type": "application/json"
         },
-        
-        body: jsond 
+
+        body: jsond
     });
-    return response 
+    return response
 }
 
 
-function disableAllInput() {
+function collectInputElements() {
+    const input_types_to_disable = ["input", "textarea", "button", "select"];
     var inputs_to_disable = [];
-    inputs_to_disable = inputs_to_disable.concat(document.getElementsByTagName("input"));
-    inputs_to_disable = inputs_to_disable.concat(document.getElementsByTagName("textarea"));
-    inputs_to_disable = inputs_to_disable.concat(document.getElementsByTagName("button"));
+    for (element_type of input_types_to_disable) {
+        var elements = document.getElementsByTagName(element_type);
+        if (elements.length > 0) {
+            inputs_to_disable = inputs_to_disable.concat(elements);
+        }
+    }
+}
+
+function disableAllInput() {
+    var inputs_to_disable = collectInputElements();
     for (item in inputs_to_disable) {
         inputs_to_disable[item][0].classList.add("disabled");
         inputs_to_disable[item][0].setAttribute("disabled", "");
 
     }
 
+}
+
+function createSpinner() {
+    var new_element = document.createElement("div")
+    new_element.classList.add("spinner-border");
+    new_element.setAttribute("id", "idplzwait");
+    return new_element
 }
 
 async function getPOIData() {
@@ -71,7 +84,7 @@ function createOption(option_no, text) {
 
 
 function populateDataTypesDropDown() {
-    
+
     getPOIData()
         .then((response) => response.json())
         .then((data) => {
@@ -83,36 +96,37 @@ function populateDataTypesDropDown() {
 }
 
 function submitPOI() {
+    disableAllInput();
+    document.getElementById("id_returnmsg").appendChild(createSpinner());
     var poi_type_id = document.getElementById("id_typeselect").value;
     navigator.geolocation.getCurrentPosition((position) => {
         postData('https://api-dev.cyclopedia.goldenrivet.xyz/poi/create', {
-            "poi_type_id": poi_type_id,
-            "latitude": position.coords.latitude,
-            "longitude": position.coords.longitude,
-            "altitude": 0,
-            "comments": String(document.getElementById("idcomments").value)
+                "poi_type_id": poi_type_id,
+                "latitude": position.coords.latitude,
+                "longitude": position.coords.longitude,
+                "altitude": 0,
+                "comments": String(document.getElementById("idcomments").value)
+
+            })
+            .then((response) => response.json())
+            .then((json) => {
+                document.getElementById("idplzwait").remove();
+                document.getElementById("idcomments").value = "";
+                enableAllInput();
+                document.getElementById("id_returnmsg").innerHTML = `Created OK: ${JSON.stringify(json)}`;
+                
             
-        });
-        
+            });
+
     });
 
 }
 
 function enableAllInput() {
-    var inputs_to_enable = [];
-    inputs_to_enable = inputs_to_enable.concat(document.getElementsByTagName("input"));
-    inputs_to_enable = inputs_to_enable.concat(document.getElementsByTagName("textarea"));
-    inputs_to_enable = inputs_to_enable.concat(document.getElementsByTagName("button"));
+    var inputs_to_enable = collectInputElements();
     for (item in inputs_to_enable) {
         inputs_to_enable[item][0].classList.remove("disabled");
         inputs_to_enable[item][0].removeAttribute("disabled", "");
 
     }
 }
-
-
-
-
-//Main
-
-//getLocation()
