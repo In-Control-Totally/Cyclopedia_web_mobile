@@ -30,8 +30,8 @@ function handleAbort() {
     };
     console.log(transmission);
     
-//    postData('https://api-dev.cyclopedia.goldenrivet.xyz/journey/create', transmission)
-    postData('http://127.0.0.1:8000/journey/create', transmission)
+    postData('https://api-dev.cyclopedia.goldenrivet.xyz/journey/create', transmission)
+    //postData('http://127.0.0.1:8000/journey/create', transmission)
 }
 
 
