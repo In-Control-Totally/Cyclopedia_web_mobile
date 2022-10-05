@@ -8,12 +8,16 @@ var stored_gps_data = []
 window.addEventListener('load', (event) => {
     document.getElementById('idEndJourneyButton').addEventListener('click', handleAbort);
     document.getElementById('idStartJourneyButton').addEventListener('click', getPosition);
+    document.getElementById('idStartJourneyButton').addEventListener('click', startCapture);
+    getLocation();
     
 });
 
 
 
-
+function startCapture() {
+    document.getElementById('idStartJourneyButton').setAttribute("disabled", "")
+}
 
 
 
