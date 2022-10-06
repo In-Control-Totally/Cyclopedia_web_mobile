@@ -37,8 +37,8 @@ function handleAbort() {
     document.getElementById('notfication').remove();
     document.getElementById('idStatusNotificationArea').appendChild(createNotification('Submitting', 'bg-warning'));
 
-    postData('http://127.0.0.1:8000/journey/create', transmission)
-        //    postData('https://api-dev.cyclopedia.goldenrivet.xyz/journey/create', transmission)
+//    postData('http://127.0.0.1:8000/journey/create', transmission)
+            postData('https://api-dev.cyclopedia.goldenrivet.xyz/journey/create', transmission)
         .then((response) => {
 
                 stored_gps_data = [];
