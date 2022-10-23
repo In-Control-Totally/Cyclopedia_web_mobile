@@ -1,5 +1,6 @@
 <html lang="en">
-    <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="/js/script.js"></script>
@@ -15,17 +16,27 @@
     <div class="container-fluid">
         <div class="row pt-3">
             <div class="col d-grid">
+                <label for="user_id_field" class="form-label">User ID number</label>
+                <input type="text" class="form-control" id="iduser" placeholder="User ID" name="user_id_field">
+            </div>
+        </div>
+        <div class="row pt-3">
+            <div class="col d-grid">
                 <button id="idStartJourneyButton" type="button" class="btn btn-success">Start Journey</button>
             </div>
         </div>
-<div class="row pt-3">
-            <div class="col d-grid">
-                <button id="idEndJourneyButton" type="button" class="btn btn-danger">End Journey</button></div></div>
         <div class="row pt-3">
-            <div class="col d-grid"  id="idStatusNotificationArea">
-        
+            <div class="col d-grid">
+                <button id="idEndJourneyButton" type="button" class="btn btn-danger">End Journey</button>
             </div>
-            
+        </div>
+        <div class="row pt-3">
+            <div class="col d-grid" id="idStatusNotificationArea">
+
+            </div>
+
         </div>
     </div>
-</body></html>
+</body>
+
+</html>

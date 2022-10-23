@@ -24,10 +24,10 @@ function startCapture() {
 
 function handleAbort() {
     abortController.abort();
-
+    
     var transmission = {
         "journey": {
-            "user_id": 1,
+            "user_id": document.getElementById("iduser").value,
             "journey_start_time": stored_gps_data[0]["timestamp"],
             "journey_end_time": stored_gps_data[stored_gps_data.length - 1]["timestamp"]
         },
@@ -37,8 +37,8 @@ function handleAbort() {
     document.getElementById('notfication').remove();
     document.getElementById('idStatusNotificationArea').appendChild(createNotification('Submitting', 'bg-warning'));
 
-//    postData('http://127.0.0.1:8000/journey/create', transmission)
-            postData('https://api-dev.cyclopedia.goldenrivet.xyz/journey/create', transmission)
+    postData('http://127.0.0.1:8000/journey/create', transmission)
+//            postData('https://api-dev.cyclopedia.goldenrivet.xyz/journey/create', transmission)
         .then((response) => {
 
                 stored_gps_data = [];
